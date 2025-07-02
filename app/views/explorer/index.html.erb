@@ -1,0 +1,43 @@
+<h1>📁 File Explorer</h1>
+
+<% if @current_path %>
+  <h2>Path: <%= @current_path %></h2>
+
+  <% parent = File.expand_path("..", @current_path) %>
+  <% if @allowed_roots.any? { |root| parent.start_with?(root) } %>
+    <%= link_to "⬅️ Back", explore_path(path: CGI.escape(parent)) %>
+  <% end %>
+
+  <h3>Folders</h3>
+  <ul>
+    <% @folders.each do |folder| %>
+      <li>
+        <%= link_to folder, explore_path(path: CGI.escape(File.join(@current_path, folder))) %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h3>Images</h3>
+  <div style="display: flex; flex-wrap: wrap;">
+    <% @images.each do |image| %>
+      <div style="margin: 10px;">
+        <% img_path = File.join(@current_path, image) %>
+        <img src="<%= media_path(path: img_path) %>" style="width: 100px; height: 100px; object-fit: cover;" />
+        <p><%= image %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <button onclick="alert('Run scan here')">📸 Scan</button>
+    <button onclick="alert('Tag media')">🏷️ Tag</button>
+  </div>
+
+<% else %>
+  <h2>Select a folder to explore:</h2>
+  <ul>
+    <% @roots.each do |path| %>
+      <li><%= link_to File.basename(path), explore_path(path: CGI.escape(path)) %></li>
+    <% end %>
+  </ul>
+<% end %>

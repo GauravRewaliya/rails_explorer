@@ -63,3 +63,7 @@ group :test do
 end
 
 gem "bundle", "~> 0.0.1"
+
+gem "image_processing", "~> 1.14"
+
+gem "dotenv-rails", "~> 3.1"
