@@ -1,0 +1,40 @@
+<turbo-stream action="update" target="image_modal">
+  <template>
+    <div class="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
+      <div class="bg-white w-[90vw] h-[90vh] rounded-lg shadow-lg flex relative">
+        <!-- Left: Image Viewer -->
+        <div class="w-2/3 h-full flex items-center justify-center overflow-hidden bg-gray-900">
+          <img id="zoomable-image"
+               src="<%= media_path(path: params[:path]) %>"
+               class="max-w-full max-h-full transition-transform duration-200"
+               alt="Selected Image" />
+        </div>
+
+        <!-- Right: Metadata -->
+        <div class="w-1/3 p-4 overflow-y-auto bg-white">
+          <h2 class="text-xl font-bold mb-2"><%= File.basename(params[:path]) %></h2>
+          <p><strong>Path:</strong> <%= params[:path] %></p>
+          <p><strong>Size:</strong> <%= number_to_human_size(File.size(params[:path])) %></p>
+          <p><strong>Modified:</strong> <%= File.mtime(params[:path]) %></p>
+
+          <!-- Dummy for future tags -->
+          <div class="mt-4">
+            <h3 class="font-semibold">Tags (Future)</h3>
+            <ul class="list-disc ml-5 text-sm text-gray-600">
+              <li>Face: Unknown</li>
+              <li>Location: N/A</li>
+            </ul>
+          </div>
+
+          <div class="mt-6 flex gap-2">
+            <button data-action="click->zoom#in" class="bg-blue-500 px-3 py-1 text-white rounded">Zoom In</button>
+            <button data-action="click->zoom#out" class="bg-blue-500 px-3 py-1 text-white rounded">Zoom Out</button>
+            <button data-action="click->zoom#reset" class="bg-gray-300 px-3 py-1 rounded">Reset</button>
+          </div>
+
+          <button data-action="click->modal#close" class="absolute top-2 right-2 text-2xl text-red-500 font-bold">×</button>
+        </div>
+      </div>
+    </div>
+  </template>
+</turbo-stream>

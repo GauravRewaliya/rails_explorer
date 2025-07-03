@@ -16,6 +16,13 @@ class ExplorerController < ApplicationController
       @roots = @allowed_roots
     end
   end
+  def show_image
+    @image_path = params[:path]
+    respond_to do |format|
+      format.turbo_stream
+      format.html { head :unprocessable_entity }
+    end
+  end
 
   private
 

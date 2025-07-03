@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root "explorer#index"
   get "/explore", to: "explorer#index"
   get "/media", to: "media#show", as: "media"
+  get "/explorer/show_image", to: "explorer#show_image", as: :explorer_show_image
 
   # get "explorer/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
